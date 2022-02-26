@@ -31,15 +31,6 @@ else
   fi
 fi
 
-
-if [[ -z "${GH_TOKEN}" ]]; then
-  echo "No github token provided"
-else
-  MY_SCRIPT_VARIABLE="${DEPLOY_ENV}"
-fi
-
-
-
 export GOPATH=$HOME/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
