@@ -18,6 +18,28 @@ if [ "${DOCKER_USER-}" ]; then
   fi
 fi
 
+if [[ -z "${GH_REPO}" ]]; then
+  echo "No github repo provided. Nothing to clone."
+else
+  echo "Found github repo. Checking for a github personal access token."
+  if [[ -z "${GH_TOKEN}" ]]; then
+    echo "No github token provided. Cloning public repo."
+    git clone https://$${GH_REPO}
+  else
+    echo "found a github token. Cloning repo."
+    git clone https://${GH_TOKEN}@${GH_REPO}
+  fi
+fi
+
+
+if [[ -z "${GH_TOKEN}" ]]; then
+  echo "No github token provided"
+else
+  MY_SCRIPT_VARIABLE="${DEPLOY_ENV}"
+fi
+
+
+
 export GOPATH=$HOME/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
