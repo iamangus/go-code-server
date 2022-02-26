@@ -14,6 +14,8 @@ RUN curl -O https://storage.googleapis.com/golang/go1.17.7.linux-amd64.tar.gz \
  
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 
+RUN chmod +x /usr/bin/entrypoint.sh
+
 RUN mkdir /home/coder/go \
  && sudo chown -R coder:coder /home/coder/go
  
