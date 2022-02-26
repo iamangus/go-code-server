@@ -29,6 +29,7 @@ USER 1000
 ENV USER=coder
 WORKDIR /home/coder/go
 
+ENV PASSWORD=""
 ENV GH_TOKEN=""
 ENV GH_REPO=""
 
