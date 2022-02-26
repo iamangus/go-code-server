@@ -19,7 +19,7 @@ RUN sudo chmod +x /usr/bin/entrypoint.sh
 COPY .bashrc /home/coder/.bashrc
 
 RUN mkdir /home/coder/go \
- && sudo chown -R coder:coder /home/coder/go
+ && sudo chown -R coder:coder /home/coder/
  
 EXPOSE 8080
 # This way, if someone sets $DOCKER_USER, docker-exec will still work as
