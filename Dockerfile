@@ -1,9 +1,9 @@
 FROM codercom/code-server:4.0.2
 
-RUN apt-get update \
- && apt-get install -y \
+RUN sudo apt-get update \
+ && sudo apt-get install -y \
     build-essential \
-  && rm -rf /var/lib/apt/lists/*
+ && sudo rm -rf /var/lib/apt/lists/*
   
 WORKDIR /tmp/
 
