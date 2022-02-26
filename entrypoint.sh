@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -eu
 
 # We do this first to ensure sudo works below when renaming the user.
