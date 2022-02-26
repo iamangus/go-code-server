@@ -12,7 +12,7 @@ RUN curl -O https://storage.googleapis.com/golang/go1.17.7.linux-amd64.tar.gz \
  && sudo chown -R root:root ./go \
  && sudo mv go /usr/local
  
-COPY ci/release-image/entrypoint.sh /usr/bin/entrypoint.sh
+COPY entrypoint.sh /usr/bin/entrypoint.sh
  
 EXPOSE 8080
 # This way, if someone sets $DOCKER_USER, docker-exec will still work as
