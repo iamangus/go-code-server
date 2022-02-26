@@ -13,6 +13,9 @@ RUN curl -O https://storage.googleapis.com/golang/go1.17.7.linux-amd64.tar.gz \
  && sudo mv go /usr/local
  
 COPY entrypoint.sh /usr/bin/entrypoint.sh
+
+RUN mkdir /home/coder/go \
+ && sudo chown -R coder:coder /home/coder/go
  
 EXPOSE 8080
 # This way, if someone sets $DOCKER_USER, docker-exec will still work as
@@ -20,7 +23,9 @@ EXPOSE 8080
 # docker-run.
 USER 1000
 ENV USER=coder
-WORKDIR /home/coder
-RUN mkdir go
+WORKDIR /home/coder/go
+
+ENV GH_TOKEN=""
+ENV GH_REPO=""
 
 ENTRYPOINT ["/usr/bin/entrypoint.sh", "--bind-addr", "0.0.0.0:8080", "."]
