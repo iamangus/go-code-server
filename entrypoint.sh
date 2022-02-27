@@ -39,4 +39,6 @@ go get golang.org/x/tools/gopls@latest
 cp /tmp/.bashrc /home/coder/.bashrc
 ls -ltra /home/coder
 
+code-server --install-extension golang.go
+
 dumb-init /usr/bin/code-server "$@"
