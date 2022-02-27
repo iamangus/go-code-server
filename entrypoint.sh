@@ -34,6 +34,8 @@ fi
 export GOPATH=$HOME/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
+go get golang.org/x/tools/gopls@latest
+
 cp /tmp/.bashrc /home/coder/.bashrc
 ls -ltra /home/coder
 
