@@ -20,7 +20,7 @@ RUN sudo chmod +x /usr/bin/entrypoint.sh
 
 COPY .bashrc /tmp/.bashrc
 
-RUN mkdir /home/coder/go
+#RUN mkdir /home/coder/go
 # && sudo chown -R coder:coder /home/coder/
  
 EXPOSE 8080
