@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eu
 
+sudo rm -rf /home/coder/go/*
+
 # We do this first to ensure sudo works below when renaming the user.
 # Otherwise the current container UID may not exist in the passwd database.
 eval "$(fixuid -q)"
@@ -34,11 +36,7 @@ fi
 export GOPATH=$HOME/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
-sudo /usr/local/go/bin/go get golang.org/x/tools/gopls@latest
-
 cp /tmp/.bashrc /home/coder/.bashrc
 ls -ltra /home/coder
-
-sudo code-server --install-extension golang.go
 
 dumb-init /usr/bin/code-server "$@"
