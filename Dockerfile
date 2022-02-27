@@ -9,12 +9,10 @@ WORKDIR /tmp/
 
 RUN curl -O https://storage.googleapis.com/golang/go1.17.7.linux-amd64.tar.gz \
  && tar -xvf go1.17.7.linux-amd64.tar.gz \
- && sudo chown -R root:root ./go \
+ && sudo chown -R root:coder ./go \
  && sudo mv go /usr/local
  
-RUN sudo /usr/local/go/bin/go install golang.org/x/tools/gopls@latest
-
-RUN sudo code-server --install-extension golang.go
+RUN /usr/local/go/bin/go install golang.org/x/tools/gopls@latest
  
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 
@@ -39,4 +37,4 @@ ENV GH_REPO=""
 
 RUN ls -ltra /home/coder
 
-ENTRYPOINT ["/usr/bin/entrypoint.sh", "--bind-addr", "0.0.0.0:8080", "."]
+ENTRYPOINT ["/usr/bin/entrypoint.sh", "--bind-addr", "0.0.0.0:8080", "--install-extension", "golang.go", "."]
