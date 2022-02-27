@@ -39,7 +39,4 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 cp /tmp/.bashrc /home/coder/.bashrc
 ls -ltra /home/coder
 
-sudo chown -R root:coder /home/coder/
-sudo chown -R root:coder /usr/local/go/
-
 dumb-init /usr/bin/code-server "$@"
