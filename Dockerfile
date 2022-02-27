@@ -16,7 +16,7 @@ COPY entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN sudo chmod +x /usr/bin/entrypoint.sh
 
-COPY .bashrc /home/coder/.bashrc
+COPY .bashrc /tmp/.bashrc
 
 RUN mkdir /home/coder/go
 # && sudo chown -R coder:coder /home/coder/
