@@ -12,7 +12,7 @@ RUN curl -O https://storage.googleapis.com/golang/go1.17.7.linux-amd64.tar.gz \
  && sudo chown -R root:root ./go \
  && sudo mv go /usr/local
  
-RUN sudo /usr/local/go/bin/go install gopls@latest
+RUN sudo /usr/local/go/bin/go install golang.org/x/tools/gopls@latest
 
 RUN sudo code-server --install-extension golang.go
  
