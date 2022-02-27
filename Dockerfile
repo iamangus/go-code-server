@@ -37,4 +37,4 @@ ENV GH_REPO=""
 
 RUN ls -ltra /home/coder
 
-ENTRYPOINT ["/usr/bin/entrypoint.sh", "--bind-addr", "0.0.0.0:8080", "--install-extension", "golang.go", "."]
+ENTRYPOINT ["/usr/bin/entrypoint.sh", "--bind-addr", "0.0.0.0:8080", "."]
