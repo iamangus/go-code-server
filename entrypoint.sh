@@ -34,6 +34,7 @@ fi
 export GOPATH=$HOME/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
+cp /tmp/.bashrc /home/coder/.bashrc
 ls -ltra /home/coder
 
 dumb-init /usr/bin/code-server "$@"
