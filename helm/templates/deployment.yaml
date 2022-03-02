@@ -72,3 +72,9 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       serviceAccountName: {{ template "srvd.serviceAccountName" . }}
+      volumes:
+      - name: data
+        hostPath:
+          path: {{ .Values.emptydirOverride }}
+          type: Directory
+        emptyDir: {}
