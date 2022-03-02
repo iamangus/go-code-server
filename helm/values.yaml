@@ -92,11 +92,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-
-## Additional go-code-server secret mounts
-extraSecretMounts: []
-  # - name: secret-files
-  #   mountPath: /etc/secrets
-  #   secretName: go-code-server-secret-files
-  #   readOnly: true
