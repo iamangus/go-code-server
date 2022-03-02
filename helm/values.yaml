@@ -32,6 +32,11 @@ podAnnotations: {}
 
 podSecurityContext: {}
   # fsGroup: 2000
+  
+securityContext:
+  enabled: true
+  fsGroup: 1000
+  runAsUser: 1000
 
 service:
   type: ClusterIP
