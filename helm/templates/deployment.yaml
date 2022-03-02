@@ -47,7 +47,7 @@ spec:
         {{- end }}
           volumeMounts:
           - name: data
-            mountPath: /home/vscode/go
+            mountPath: /home/vscode
           ports:
             - name: http
               containerPort: 8080
