@@ -1,0 +1,9 @@
+apiVersion: v2
+name: go-code-server
+description: A Helm chart for iamangus/go-code-server
+
+type: application
+
+version: 1.0
+
+appVersion: 4.0.2
