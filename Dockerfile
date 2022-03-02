@@ -55,4 +55,6 @@ RUN \
    
 WORKDIR /home/vscode
 
+RUN chown -R vscode:vscode /home/vscode
+
 ENTRYPOINT ["code-server", "--bind-addr", "0.0.0.0:8080", "."]
