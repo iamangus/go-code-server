@@ -53,5 +53,5 @@ RUN \
    mv code-server-$VERSION-linux-amd64 /usr/lib/code-server && \
    sed -i 's/"$ROOT\/lib\/node"/node/g'  /usr/lib/code-server/bin/code-server
 
-ENTRYPOINT ["entrypoint-su-exec", "code-server"]
+ENTRYPOINT ["code-server"]
 CMD ["--bind-addr 0.0.0.0:8080"]
