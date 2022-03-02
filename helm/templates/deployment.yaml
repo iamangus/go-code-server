@@ -77,6 +77,4 @@ spec:
       serviceAccountName: {{ template "srvd.serviceAccountName" . }}
       volumes:
       - name: data
-        hostPath:
-          type: Directory
         emptyDir: {}
