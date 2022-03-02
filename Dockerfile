@@ -30,6 +30,9 @@ ENV \
    # code-server version \
    VERSION=4.0.2
 
+RUN groupadd -g 999 $EGROUP && \
+    useradd -r -u 999 -g $EUSER $EGROUP
+
 COPY code-server /usr/bin/
 RUN chmod +x /usr/bin/code-server
 
@@ -54,5 +57,6 @@ RUN \
    sed -i 's/"$ROOT\/lib\/node"/node/g'  /usr/lib/code-server/bin/code-server
    
 WORKDIR /home/vscode
+USER $EUSER
 
 ENTRYPOINT ["code-server", "--bind-addr", "0.0.0.0:8080", "."]
