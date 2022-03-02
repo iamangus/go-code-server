@@ -45,6 +45,9 @@ spec:
           args:
 {{ toYaml .Values.extraArgs | indent 10 }}
         {{- end }}
+          volumeMounts:
+          - name: data
+            mountPath: /home/vscode/go
           ports:
             - name: http
               containerPort: 8080
@@ -75,6 +78,5 @@ spec:
       volumes:
       - name: data
         hostPath:
-          path: {{ .Values.emptydirOverride }}
           type: Directory
         emptyDir: {}
