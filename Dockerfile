@@ -29,9 +29,8 @@ ENV \
    EHOME=/home/vscode \
    # code-server version \
    VERSION=4.0.2
-
-RUN groupadd -g 999 $EGROUP && \
-    useradd -r -u 999 -g $EUSER $EGROUP
+    
+RUN addgroup -S $EGROUP && adduser -S $EUSER -G $EGROUP
 
 COPY code-server /usr/bin/
 RUN chmod +x /usr/bin/code-server
