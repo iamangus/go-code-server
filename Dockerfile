@@ -13,7 +13,7 @@ RUN \
    apk del curl && \
    rm -rf glibc.apk glibc-bin.apk /var/cache/apk/*
    
- ENV \
+ENV \
    # container/su-exec UID \
    EUID=1001 \
    # container/su-exec GID \
