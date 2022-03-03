@@ -1,8 +1,6 @@
 #!/bin/bash
 set -eu
 
-sudo rm -rf /home/coder/go/*
-
 sudo chown -R coder:coder /home/coder/go
 
 # We do this first to ensure sudo works below when renaming the user.
@@ -39,7 +37,6 @@ export GOPATH=$HOME/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
 cp /tmp/.bashrc /home/coder/.bashrc
-ls -ltra /home/coder
 
 /usr/local/go/bin/go install golang.org/x/tools/gopls@latest &
 
