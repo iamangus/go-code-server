@@ -17,7 +17,9 @@ RUN curl -O https://storage.googleapis.com/golang/go$GOVER.linux-amd64.tar.gz \
  && sudo chown -R root:coder ./go \
  && sudo mv go /usr/local
  
-RUN /usr/local/go/bin/go install golang.org/x/tools/gopls@latest
+RUN export GOPATH=$HOME/go \
+ && export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin \
+ && /usr/local/go/bin/go install golang.org/x/tools/gopls@latest
  
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 
