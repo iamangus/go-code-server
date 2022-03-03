@@ -25,7 +25,7 @@ if [[ -z "${GH_REPO}" ]]; then
   CODEDIR="."
 else
   basename https://$GH_REPO
-  CODEDIR=basename https://$GH_REPO
+  CODEDIR=$(basename https://$GH_REPO)
   echo "Found github repo. Checking for a github personal access token."
   if [[ -z "${GH_TOKEN}" ]]; then
     echo "No github token provided. Cloning public repo."
