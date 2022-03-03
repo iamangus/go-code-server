@@ -44,6 +44,7 @@ RUN \
    curl \
    git \
    gnupg \
+   npm \
    nodejs \
    openssh-client
    
