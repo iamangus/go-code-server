@@ -62,6 +62,8 @@ RUN \
    sed -i 's/"$ROOT\/lib\/node"/node/g'  /usr/lib/code-server/bin/code-server
    
 RUN mkdir /home/vscode/go
+
+COPY .bashrc /tmp/.bashrc
    
 WORKDIR /home/vscode/go
 USER $EUSER
