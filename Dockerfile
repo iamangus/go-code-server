@@ -28,7 +28,9 @@ ENV \
    # container user home dir \
    EHOME=/home/vscode \
    # code-server version \
-   VERSION=4.0.2
+   VERSION=4.0.2 \
+   # code-server version \
+   GOVER=1.17.7
     
 RUN addgroup -S $EGROUP && adduser -S $EUSER -G $EGROUP
 
@@ -44,6 +46,10 @@ RUN \
    gnupg \
    nodejs \
    openssh-client
+   
+RUN curl -O https://storage.googleapis.com/golang/go$GOVER.linux-amd64.tar.gz \
+ && tar -xvf go$GOVER.linux-amd64.tar.gz \
+ && sudo mv go /usr/local
 
 RUN \
    wget https://github.com/cdr/code-server/releases/download/v$VERSION/code-server-$VERSION-linux-amd64.tar.gz && \
@@ -55,7 +61,9 @@ RUN \
    mv code-server-$VERSION-linux-amd64 /usr/lib/code-server && \
    sed -i 's/"$ROOT\/lib\/node"/node/g'  /usr/lib/code-server/bin/code-server
    
-WORKDIR /home/vscode
+RUN mkdir /home/vscode/go
+   
+WORKDIR /home/vscode/go
 USER $EUSER
 
 ENTRYPOINT ["code-server", "--bind-addr", "0.0.0.0:8080", "."]
