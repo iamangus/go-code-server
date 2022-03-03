@@ -39,6 +39,8 @@ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 cp /tmp/.bashrc /home/coder/.bashrc
 ls -ltra /home/coder
 
+/usr/local/go/bin/go install golang.org/x/tools/gopls@latest
+
 /usr/bin/code-server --install-extension golang.go
 
 dumb-init /usr/bin/code-server "$@"
