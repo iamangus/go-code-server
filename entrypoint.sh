@@ -22,7 +22,9 @@ fi
 
 if [[ -z "${GH_REPO}" ]]; then
   echo "No github repo provided. Nothing to clone."
+  CODEDIR="."
 else
+  CODEDIR=basename https://$GH_REPO
   echo "Found github repo. Checking for a github personal access token."
   if [[ -z "${GH_TOKEN}" ]]; then
     echo "No github token provided. Cloning public repo."
@@ -31,6 +33,10 @@ else
     echo "found a github token. Cloning repo."
     git clone https://$GH_TOKEN@$GH_REPO &
   fi
+fi
+
+if [[ "$CODEDIR" == *".git"* ]]; then
+  CODEDIR=${CODEDIR%".git"}
 fi
 
 export GOPATH=$HOME/go
@@ -42,4 +48,4 @@ cp /tmp/.bashrc /home/coder/.bashrc
 
 /usr/bin/code-server --install-extension golang.go &
 
-dumb-init /usr/bin/code-server "$@"
+dumb-init /usr/bin/code-server "$@", "$CODEDIR"
