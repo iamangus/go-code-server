@@ -24,6 +24,7 @@ if [[ -z "${GH_REPO}" ]]; then
   echo "No github repo provided. Nothing to clone."
   CODEDIR="."
 else
+  basename https://$GH_REPO
   CODEDIR=basename https://$GH_REPO
   echo "Found github repo. Checking for a github personal access token."
   if [[ -z "${GH_TOKEN}" ]]; then
@@ -36,7 +37,9 @@ else
 fi
 
 if [[ "$CODEDIR" == *".git"* ]]; then
+  echo "Before " + $CODEDIR
   CODEDIR=${CODEDIR%".git"}
+  echo "After " + $CODEDIR
 fi
 
 export GOPATH=$HOME/go
