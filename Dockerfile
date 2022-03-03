@@ -28,4 +28,4 @@ USER 1000
 ENV USER=coder
 WORKDIR /home/coder/go
 RUN ls -ltra /home/coder
-ENTRYPOINT ["/usr/bin/entrypoint.sh", "--bind-addr", "0.0.0.0:8080", "."]
+ENTRYPOINT ["/usr/bin/entrypoint.sh", "--bind-addr", "0.0.0.0:8080"]
