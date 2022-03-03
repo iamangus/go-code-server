@@ -7,6 +7,7 @@ ENV GOVER=1.17.7
 RUN sudo apt-get update \
  && sudo apt-get install -y \
     build-essential \
+    vim \
   && sudo rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp/
