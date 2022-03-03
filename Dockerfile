@@ -49,7 +49,7 @@ RUN \
    
 RUN curl -O https://storage.googleapis.com/golang/go$GOVER.linux-amd64.tar.gz \
  && tar -xvf go$GOVER.linux-amd64.tar.gz \
- && sudo mv go /usr/local
+ && mv go /usr/local
 
 RUN \
    wget https://github.com/cdr/code-server/releases/download/v$VERSION/code-server-$VERSION-linux-amd64.tar.gz && \
