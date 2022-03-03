@@ -35,9 +35,7 @@ RUN ARCH="$(dpkg --print-architecture)" && \
     mkdir -p /etc/fixuid && \
     printf "user: coder\ngroup: coder\n" > /etc/fixuid/config.yml
 
-COPY release-packages/code-server*.deb /tmp/
-COPY ci/release-image/entrypoint.sh /usr/bin/entrypoint.sh
-RUN dpkg -i /tmp/code-server*$(dpkg --print-architecture).deb && rm /tmp/code-server*.deb
+RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 WORKDIR /tmp/
 
