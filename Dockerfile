@@ -1,72 +1,71 @@
-FROM alpine:3.15
+FROM debian:11
 
-ENV GLIBC_VERSION 2.34-r0
+RUN apt-get update \
+ && apt-get install -y \
+    curl \
+    dumb-init \
+    zsh \
+    htop \
+    locales \
+    man \
+    nano \
+    git \
+    git-lfs \
+    build-essential \
+    procps \
+    openssh-client \
+    sudo \
+    vim.tiny \
+    lsb-release \
+  && git lfs install \
+  && rm -rf /var/lib/apt/lists/*
 
-# Download and install glibc
-RUN \
-   apk add --update curl && \
-   curl -Lo /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
-   curl -Lo glibc.apk "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk" && \
-   curl -Lo glibc-bin.apk "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk" && \
-   apk add glibc-bin.apk glibc.apk && \
-   /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib && \
-   echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
-   apk del curl && \
-   rm -rf glibc.apk glibc-bin.apk /var/cache/apk/*
-   
-ENV \
-   # container/su-exec UID \
-   EUID=1001 \
-   # container/su-exec GID \
-   EGID=1001 \
-   # container/su-exec user name \
-   EUSER=vscode \
-   # container/su-exec group name \
-   EGROUP=vscode \
-   # should user shell set to nologin? (yes/no) \
-   ENOLOGIN=no \
-   # container user home dir \
-   EHOME=/home/vscode \
-   # code-server version \
-   VERSION=4.0.2 \
-   # code-server version \
-   GOVER=1.17.7
-    
-RUN addgroup -S $EGROUP && adduser -S $EUSER -G $EGROUP
+# https://wiki.debian.org/Locale#Manually
+RUN sed -i "s/# en_US.UTF-8/en_US.UTF-8/" /etc/locale.gen \
+  && locale-gen
+ENV LANG=en_US.UTF-8
 
-COPY code-server /usr/bin/
-RUN chmod +x /usr/bin/code-server
+RUN adduser --gecos '' --disabled-password coder && \
+  echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
-# Install dependencies
-RUN \
-   apk --no-cache --update add \
-   bash \
-   curl \
-   git \
-   gnupg \
-   npm \
-   nodejs \
-   openssh-client
-   
-RUN curl -O https://storage.googleapis.com/golang/go$GOVER.linux-amd64.tar.gz \
- && tar -xvf go$GOVER.linux-amd64.tar.gz \
- && mv go /usr/local
+RUN ARCH="$(dpkg --print-architecture)" && \
+    curl -fsSL "https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.5-linux-$ARCH.tar.gz" | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: coder\ngroup: coder\n" > /etc/fixuid/config.yml
 
-RUN \
-   wget https://github.com/cdr/code-server/releases/download/v$VERSION/code-server-$VERSION-linux-amd64.tar.gz && \
-   tar x -zf code-server-$VERSION-linux-amd64.tar.gz && \
-   rm code-server-$VERSION-linux-amd64.tar.gz && \
-   rm code-server-$VERSION-linux-amd64/node && \
-   rm code-server-$VERSION-linux-amd64/code-server && \
-   rm code-server-$VERSION-linux-amd64/lib/node && \
-   mv code-server-$VERSION-linux-amd64 /usr/lib/code-server && \
-   sed -i 's/"$ROOT\/lib\/node"/node/g'  /usr/lib/code-server/bin/code-server
-   
-RUN mkdir /home/vscode/go
+COPY release-packages/code-server*.deb /tmp/
+COPY ci/release-image/entrypoint.sh /usr/bin/entrypoint.sh
+RUN dpkg -i /tmp/code-server*$(dpkg --print-architecture).deb && rm /tmp/code-server*.deb
+
+WORKDIR /tmp/
+
+RUN curl -O https://storage.googleapis.com/golang/go1.17.7.linux-amd64.tar.gz \
+ && tar -xvf go1.17.7.linux-amd64.tar.gz \
+ && sudo chown -R root:coder ./go \
+ && sudo mv go /usr/local
+ 
+RUN /usr/local/go/bin/go install golang.org/x/tools/gopls@latest
+ 
+COPY entrypoint.sh /usr/bin/entrypoint.sh
+
+RUN sudo chmod +x /usr/bin/entrypoint.sh
 
 COPY .bashrc /tmp/.bashrc
-   
-WORKDIR /home/vscode/go
-USER $EUSER
+ 
+EXPOSE 8080
+# This way, if someone sets $DOCKER_USER, docker-exec will still work as
+# the uid will remain the same. note: only relevant if -u isn't passed to
+# docker-run.
+USER 1000
+ENV USER=coder
+WORKDIR /home/coder/go
 
-ENTRYPOINT ["code-server", "--bind-addr", "0.0.0.0:8080", "."]
+ENV PASSWORD=""
+ENV GH_TOKEN=""
+ENV GH_REPO=""
+
+RUN ls -ltra /home/coder
+
+ENTRYPOINT ["/usr/bin/entrypoint.sh", "--bind-addr", "0.0.0.0:8080", "."]
