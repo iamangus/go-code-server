@@ -5,10 +5,10 @@ ENV GH_TOKEN=""
 ENV GH_REPO=""
 ENV GOVER=1.17.7
 
-RUN apt-get update \
- && apt-get install -y \
+RUN sudo apt-get update \
+ && sudo apt-get install -y \
     build-essential \
-  && rm -rf /var/lib/apt/lists/*
+  && sudo rm -rf /var/lib/apt/lists/*
 
 WORKDIR /tmp/
 
