@@ -3,6 +3,8 @@ set -eu
 
 sudo rm -rf /home/coder/go/*
 
+sudo chown -R coder:coder /home/coder/go
+
 # We do this first to ensure sudo works below when renaming the user.
 # Otherwise the current container UID may not exist in the passwd database.
 eval "$(fixuid -q)"
