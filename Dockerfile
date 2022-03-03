@@ -1,8 +1,5 @@
 FROM codercom/code-server
 
-ENV PASSWORD=""
-ENV GH_TOKEN=""
-ENV GH_REPO=""
 ENV GOVER=1.17.7
 
 RUN sudo apt-get update \
