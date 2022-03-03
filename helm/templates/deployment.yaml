@@ -39,7 +39,7 @@ spec:
         {{- end }}
           volumeMounts:
           - name: data
-            mountPath: /home/vscode
+            mountPath: /home/coder
           ports:
             - name: http
               containerPort: 8080
