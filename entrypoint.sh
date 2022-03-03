@@ -55,4 +55,4 @@ cp /tmp/.bashrc /home/coder/.bashrc
 
 wait
 
-dumb-init /usr/bin/code-server "$@, $CODEDIR"
+dumb-init /usr/bin/code-server --bind-addr 0.0.0.0:8080 "$CODEDIR"
