@@ -6,8 +6,7 @@ ENV GOVER=1.17.7
 
 RUN sudo apt-get update \
  && sudo apt-get install -y \
-    node\
-    npm \
+    nodejs\
     build-essential \
     vim \
   && sudo rm -rf /var/lib/apt/lists/*
