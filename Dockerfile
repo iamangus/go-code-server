@@ -13,11 +13,14 @@ RUN sudo apt-get update \
 WORKDIR /tmp/
 
 RUN curl -O https://storage.googleapis.com/golang/go$GOVER.linux-amd64.tar.gz \
- && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
  && tar -xvf go$GOVER.linux-amd64.tar.gz \
  && sudo chown -R root:coder ./go \
- && sudo mv go /usr/local \
- && nvm install --lts
+ && sudo mv go /usr/local
+ 
+SHELL ["/bin/bash", "--login", "-i", "-c"]
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+RUN source /root/.bashrc && nvm install --lts
+SHELL ["/bin/bash", "--login", "-c"]
  
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 
